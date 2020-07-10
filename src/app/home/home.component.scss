@@ -1,0 +1,71 @@
+@import 'variables';
+
+.home-page {
+  padding: 4rem 6rem;
+  min-height: 100vh;
+  background: url(assets/img/home-bg.svg) right 4rem no-repeat;
+  header {
+    position: relative;
+    a {
+      position: absolute;
+      right: 0;
+      top: 0;
+      svg {
+        fill: $blue;
+      }
+    }
+  }
+  article {
+    max-width: 600px;
+    & > h1 {
+      font-size: 3rem;
+      font-weight: 500;
+    }
+    & > p {
+      font-size: 1.5rem;
+    }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 0 -.75rem;
+      li {
+        display: inline-flex;
+        border: 1px solid $border-gray;
+        border-radius: .25rem;
+        margin: 1rem .75rem;
+        flex: 0 0 calc(50% - 1.5rem);
+        a {
+          display: block;
+          width: 100%;
+          background: $white;
+          padding: 1.25rem;
+        }
+        p {
+          margin-bottom: 0;
+          color: $black;
+        }
+      }
+    }
+  }
+  @include respond-to(mobiles) {
+    padding: 2rem;
+    background: none;
+    article {
+      & > h1 {
+        font-size: 1.5rem;
+      }
+      & > p {
+        font-size: 1.125rem;
+      }
+      ul {
+        flex-wrap: initial;
+        flex-direction: column;
+        li {
+          flex: 0 0 auto;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

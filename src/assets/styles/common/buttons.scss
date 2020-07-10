@@ -1,0 +1,66 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: .875rem;
+  line-height: 1.5rem;
+  border-radius: .25rem;
+  transition: all .15s ease-in-out;
+  color: $black;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: .3;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: $blue;
+  border-color: $blue;
+  color: $white;
+  svg {
+    fill: $white;
+    margin-right: .5rem;
+  }
+  &:not(:disabled):hover {
+    background: darken($blue, 15%);
+  }
+}
+
+.btn-action {
+  background: $green;
+  border-color: $green;
+  color: $white;
+  svg {
+    fill: $white;
+    margin-right: .5rem;
+  }
+  &:not(:disabled):hover {
+    background: darken($green, 5%);
+  }
+}
+
+.btn-default {
+  background: $white;
+  color: $black;
+  border-color: $border-gray;
+  svg {
+    fill: rgba($black, .6);
+    margin-right: .5rem;
+  }
+  &.btn-icon-primary svg {
+    fill: $blue;
+  }
+  &:not(:disabled):hover {
+    background: lighten($lightgray, .1);
+  }
+}

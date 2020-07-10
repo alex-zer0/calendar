@@ -1,0 +1,41 @@
+<header class="admin-users-header">
+  <h1>Пользователи</h1>
+  <div class="admin-users-header__filters" [formGroup]="form">
+    <input type="text" class="form-control" placeholder="Поиск по ФИО, email" formControlName="dynamicFilter"/>
+    <ng-select
+      [items]="limits"
+      [clearable]="false"
+      formControlName="limit"
+      bindLabel="id"
+      bindValue="id"
+      dropdownPosition="auto"
+      placeholder="Количество строк">
+    </ng-select>
+  </div>
+</header>
+<section class="admin-users-section">
+  <table class="g-table">
+    <thead>
+      <tr>
+        <th>ФИО</th>
+        <th>E-mail</th>
+        <th>Роль</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of (users$ | async)">
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ getRoles(user) }}</td>
+        <td>
+          <svg width="20" height="20" (click)="editUser(user)">
+            <use xlink:href="#edit"></use>
+          </svg>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-pagination [data]="usersMeta$ | async" (changePage)="changePage($event)"></app-pagination>
+</section>
+<app-admin-edit-user #editModal [roles]="roles$ | async"></app-admin-edit-user>

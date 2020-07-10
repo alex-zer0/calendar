@@ -1,0 +1,51 @@
+$red: #FF4229;
+$black: #1A1A1A;
+$gray: #808080;
+$head-gray: #9E9E9E;
+$lightgray: #F5F5F5;
+$white: #FFFFFF;
+$blue: #4688F1;
+$green: #61B142;
+$yellow: #F0F000;
+$light-blue: #E3EEFF;
+$pale-blue: rgba($blue, 0.85);
+$bg-blue: rgba($blue, 0.2);
+$border-gray: rgba($gray, 0.25);
+$bg-red: rgba($red, 0.2);
+
+$work-control-nav-height: 5rem;
+$form-max-width: 55%;
+$form-min-width: 600px;
+
+$mobile: 768px;
+$tablets: 1024px;
+
+@mixin respond-to($media) {
+  @if $media == mobiles {
+    @media only screen and (max-width: $mobile - 1) { @content; }
+  }
+  @if $media == tablets {
+    @media only screen and (max-width: $tablets - 1) { @content; }
+  }
+}
+
+@mixin horizontal-offset {
+  padding-left: 3.75rem;
+  padding-right: 3.75rem;
+
+  @media only screen and (max-width: $mobile) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@mixin page-offset {
+  padding-left: 3.75rem;
+  padding-right: 3.75rem;
+  padding-bottom: 7rem;
+
+  @media only screen and (max-width: $mobile) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

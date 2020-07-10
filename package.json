@@ -1,0 +1,62 @@
+{
+  "name": "calendar",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --open --port=8000 --aot --hmr",
+    "clean": "rm -rf node_modules && yarn cache clean",
+    "compile": "tsc -p tsconfig.json --noEmit",
+    "build:test": "ng build -c=test",
+    "build:stage": "ng build -c=stage",
+    "build:stand": "ng build -c=stand",
+    "build:prod": "ng build -c=prod",
+    "test": "jest",
+    "lint": "ng lint"
+  },
+  "private": true,
+  "author": {
+    "name": "Alex Yedomski",
+    "email": "alex1tut@mail.ru"
+  },
+  "dependencies": {
+    "@angular/animations": "^8.2.14",
+    "@angular/common": "^8.2.14",
+    "@angular/compiler": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "@angular/forms": "^8.2.14",
+    "@angular/platform-browser": "^8.2.14",
+    "@angular/platform-browser-dynamic": "^8.2.14",
+    "@angular/router": "^8.2.14",
+    "@auth/core": "^1.0.3",
+    "@ng-select/ng-select": "^3.6.2",
+    "@ngxs/storage-plugin": "^3.5.1",
+    "@ngxs/store": "^3.5.1",
+    "core-js": "^2.5.4",
+    "flatpickr": "^4.6.3",
+    "luxon": "^1.21.2",
+    "ngx-perfect-scrollbar": "^8.0.0",
+    "node-sass": "^4.13.0",
+    "rxjs": "^6.5.3",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.9.1"
+  },
+  "devDependencies": {
+    "@angular-builders/jest": "^8.3.1",
+    "@angular-devkit/build-angular": "^0.803.19",
+    "@angular/cli": "^8.3.19",
+    "@angular/compiler-cli": "^8.2.14",
+    "@angular/language-service": "^8.2.14",
+    "@types/jest": "^24.0.23",
+    "@types/luxon": "^1.21.0",
+    "@types/node": "^10.0.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.2",
+    "tslint": "^5.11.0",
+    "tslint-config": "^1.0.0",
+    "typescript": "~3.4.0"
+  },
+  "engines": {
+    "node": ">=10.9"
+  }
+}

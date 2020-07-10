@@ -1,0 +1,36 @@
+@import 'variables';
+
+.g-pagination {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  &__pages {
+    display: flex;
+    align-items: center;
+    li {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $gray;
+      font-size: .875rem;
+      cursor: pointer;
+      svg {
+        fill: $gray;
+      }
+      &:hover, &.active {
+        color: $black;
+        svg {
+          fill: $black;
+        }
+      }
+      & + li {
+        margin-left: .5rem;
+      }
+    }
+  }
+  &__next {
+    transform: rotate(180deg);
+  }
+}

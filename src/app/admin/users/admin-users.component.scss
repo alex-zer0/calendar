@@ -1,0 +1,48 @@
+@import 'variables';
+
+.admin-users-header {
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h1 {
+    color: $head-gray;
+    font-size: 3rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  &__filters {
+    display: inline-flex;
+    align-items: flex-end;
+    .form-control {
+      border: none;
+      border-bottom: 1px solid $border-gray;
+      border-radius: 0;
+      width: 250px;
+    }
+    .ng-select {
+      margin-left: 1.25rem;
+      /deep/ .ng-select-container {
+        border: none;
+        border-bottom: 1px solid $border-gray;
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+.admin-users-section {
+  padding: 0 .5rem;
+
+  .g-table {
+    th:last-child {
+      width: 130px;
+    }
+    td:last-child {
+      svg {
+        cursor: pointer;
+        fill: $gray;
+      }
+    }
+  }
+}

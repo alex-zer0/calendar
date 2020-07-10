@@ -1,0 +1,30 @@
+<div [formGroup]="form" class="work-time-control">
+  <div class="form-group work-time-control__date">
+    <label>Дата</label>
+    <app-date-picker #datePicker [options]="datePickerOptions"></app-date-picker>
+  </div>
+  <div *ngIf="dateControl.valid" formGroupName="time" class="form-group">
+    <label>Время</label>
+    <div class="work-time-control__time">
+      <ng-select
+        [searchable]="false"
+        [items]="timeStartOptions"
+        placeholder="с __:__"
+        formControlName="start"
+        bindLabel="title"
+        bindValue="id"
+        dropdownPosition="auto">
+      </ng-select>
+      <span></span>
+      <ng-select
+        [searchable]="false"
+        [items]="timeEndOptions"
+        placeholder="до __:__"
+        formControlName="end"
+        bindLabel="title"
+        bindValue="id"
+        dropdownPosition="auto">
+      </ng-select>
+    </div>
+  </div>
+</div>

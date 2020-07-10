@@ -1,0 +1,46 @@
+<div class="modal">
+  <div class="modal__backdrop" (click)="close(null)"></div>
+  <div class="modal__dialog">
+    <div class="modal__body">
+      <div class="edit-user-block">
+        <app-user-photo [hash]="user?.globalId" [size]="85"></app-user-photo>
+        <div class="edit-user-block__form" [formGroup]="form">
+          <h5>Данные сотрудника</h5>
+          <div class="row">
+            <div class="col col-6">
+              <label>Фамилия Имя Отчество</label>
+              <input type="text" class="form-control" readonly formControlName="fullName"/>
+            </div>
+            <div class="col col-6">
+              <label>Email</label>
+              <input type="text" class="form-control" readonly formControlName="email"/>
+            </div>
+          </div>
+          <h5>Роль в системе</h5>
+          <ng-select
+            [items]="roles"
+            [multiple]="true"
+            [maxSelectedItems]="1"
+            formControlName="rolesIds"
+            bindLabel="description"
+            bindValue="id"
+            dropdownPosition="auto"
+            placeholder="Выбрать роль"
+          >
+            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+              <span [innerHtml]="item.description | textHighlight:search"></span>
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn-primary" (click)="save()">
+        Сохранить
+      </button>
+      <button class="btn btn-default" (click)="close(null)">
+        Отмена
+      </button>
+    </div>
+  </div>
+</div>

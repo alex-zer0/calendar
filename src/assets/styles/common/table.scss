@@ -1,0 +1,15 @@
+.g-table {
+  table-layout: fixed;
+  width: 100%;
+
+  th, td {
+    padding: 1rem 1.5rem;
+    font-size: .875rem;
+    letter-spacing: -0.05px;
+    color: #3A3B3F;
+    font-weight: normal;
+    border-bottom: 1px solid $border-gray;
+    text-align: left;
+    word-wrap: break-word;
+  }
+}

@@ -1,0 +1,11 @@
+@import 'variables';
+
+.user-photo {
+  margin-right: 1.125rem;
+  overflow: hidden;
+  img {
+    object-fit: cover;
+    border-radius: 100%;
+    border: 1px solid $border-gray;
+  }
+}

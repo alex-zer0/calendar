@@ -1,0 +1,28 @@
+@import 'variables';
+
+.admin-dashboard-header {
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h1 {
+    color: $head-gray;
+    font-size: 3rem;
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+.admin-dashboard-section {
+  padding: 0 2.5rem;
+  h3 {
+    font-size: 1.125rem;
+    color: #A1A1A1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-top: 0;
+  }
+  .form-control + h3 {
+    margin-top: 2rem;
+  }
+}

@@ -1,0 +1,36 @@
+<div class="form-group guests-control" [formGroup]="form">
+  <label>Участники</label>
+  <ng-select
+    [items]="guests$ | async"
+    [typeahead]="guestTypeahead$"
+    formControlName="guestSelect"
+    placeholder="Добавить участников"
+    bindLabel="fullName"
+    bindValue="globalId"
+    dropdownPosition="auto"
+    (change)="addGuest($event)"
+  >
+    <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+      <div class="guests-control__guest-item">
+        <app-user-photo [hash]="item.globalId" [size]="32"></app-user-photo>
+        <div class="guests-control__guest-item__info">
+          <span [innerHtml]="item.fullName | textHighlight:search"></span>
+          <span class="guests-control__guest-item__email">{{ item.email }}</span>
+        </div>
+      </div>
+    </ng-template>
+  </ng-select>
+
+  <ng-container formArrayName="guests">
+    <div *ngFor="let guestControl of guestsGroup.controls; let i = index" class="guests-control__guest">
+      <div *ngIf="guestControl.getRawValue() as guest" class="guests-control__guest__info">
+        <app-user-photo [hash]="guest.globalId"></app-user-photo>
+        <div>
+          <span class="guests-control__guest__name">{{ guest.fullName }}</span>
+          <span class="guests-control__guest__email">{{ guest.email }}</span>
+        </div>
+      </div>
+      <a class="link" (click)="guestsGroup.removeAt(i)">удалить</a>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,35 @@
+@import 'variables';
+
+.modal {
+  &__body {
+    padding: 3rem 2rem;
+  }
+  &__dialog {
+    max-width: 1040px;
+  }
+}
+
+.edit-user-block {
+  display: flex;
+  &__form {
+    margin-left: 1.5rem;
+    flex: 0 1 100%;
+    h5 {
+      font-size: .75rem;
+      text-transform: uppercase;
+      color: $head-gray;
+      font-weight: 600;
+      margin: .5rem 0;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+    label {
+      font-size: .75rem;
+      font-weight: 500;
+    }
+    .row + h5 {
+      margin-top: 2.5rem;
+    }
+  }
+}

@@ -1,0 +1,111 @@
+<main
+  *ngIf="{
+    activeStatusId: activeStatusId$ | async,
+    activePanelType: activePanelType$ | async,
+    meeting: meeting$ | async
+  } as obs"
+  class="registry-page"
+>
+  <header class="registry-page__header">
+    <div class="registry-page__header-nav">
+      <a *ngIf="showHomeLink$ | async" class="btn btn-default" routerLink="/">На главную</a>
+      <div class="registry-page__filters" [class.registry-page__filters--hidden]="obs.activePanelType != null">
+        <div *ngIf="(statuses$ | async) as statuses" class="registry-page__chips">
+          <a
+            *ngFor="let status of statuses"
+            class="registry-page__chip"
+            [class.registry-page__chip--active]="status.id == obs.activeStatusId"
+            (click)="applyFilter('statusId', status.id)"
+          >
+            {{ status.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="registry-page__header-actions">
+      <a *ngIf="showAdd$ | async" class="btn btn-primary" routerLink="/form">
+        <svg width="16" height="16">
+          <use xlink:href="#plus"></use>
+        </svg>
+        Добавить
+      </a>
+    </div>
+  </header>
+  <section class="registry-page__section" [class.registry-page__section--full-vh]="isContractor$ | async">
+    <aside class="registry-page__aside" infinite-scroll (onScroll)="loadMore()">
+      <div
+        *ngFor="let meeting of (meetings$ | async)"
+        class="registry-item"
+        [class.registry-item--active]="meeting.id == obs.meeting?.id"
+        (click)="selectMeeting(meeting)"
+      >
+        <div class="registry-item__header">
+          <span>№ {{ meeting.id }}</span>
+          <span>{{ meeting.meetingEndDate | date:'dd.MM.y' }}</span>
+        </div>
+        <span class="registry-item__status" [class.green]="meeting.status?.id == 60">
+          {{ meeting.status?.name }}
+        </span>
+        <h5 class="registry-item__name">{{ meeting.objectName }}</h5>
+      </div>
+    </aside>
+    <div class="registry-page__content">
+      <app-registry-meeting
+        *ngIf="(meeting$ | async) as meeting; else dashboard"
+        [meeting]="meeting">
+      </app-registry-meeting>
+      <ng-template #dashboard>
+        <div *ngIf="(stats$ | async) as stats" class="registry-dashboard">
+          <h3 class="registry-dashboard__title">Заявки в работе</h3>
+          <div
+            class="registry-tile registry-tile--today"
+            [class.registry-tile--active]="isTodayActive$ | async"
+            (click)="toggleToday()"
+          >
+            <span class="registry-tile__value">{{ stats.totalToday }}</span>
+            <div class="registry-tile__info">
+              <span class="registry-tile__hint">Заявки на сегодня</span>
+              <span class="registry-tile__date">{{ today | date }}</span>
+            </div>
+          </div>
+          <ng-container *ngIf="(filterTiles$ | async) as filterTiles">
+            <h3 class="registry-dashboard__title">Заявки на согласовании</h3>
+            <div class="row">
+              <div
+                *ngFor="let tile of filterTiles"
+                class="col"
+                [class.col-md-4]="filterTiles.length === 3"
+                [class.col-md-6]="filterTiles.length === 2"
+              >
+                <div
+                  class="registry-tile"
+                  [class.registry-tile--active]="tile.id == obs.activePanelType"
+                  (click)="applyFilter('panelType', tile.id)"
+                >
+                  <div class="registry-tile__info">
+                    <span class="registry-tile__hint">{{ tile.title }}</span>
+                    <span class="registry-tile__value">{{ stats[tile.stats] || 0 }}</span>
+                  </div>
+                  <span class="registry-tile__icon">
+                    <svg width="32" height="32" [style.fill]="tile.color">
+                      <use [attr.xlink:href]="tile.icon"></use>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <h3 class="registry-dashboard__title">Визуализация данных</h3>
+          <div class="registry-dashboard__chart">
+            <div id="vizDashboard" [class.viz-dashboard]="reportLink$ | async"></div>
+            <div class="registry-dashboard__date-picker">
+              <app-date-picker [options]="datePickerOptions"></app-date-picker>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+</main>
+<app-svg-definitions></app-svg-definitions>
+<app-page-locker *ngIf="isWaiting$ | async"></app-page-locker>

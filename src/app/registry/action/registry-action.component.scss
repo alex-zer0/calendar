@@ -1,0 +1,42 @@
+@import 'variables';
+
+.registry-action {
+  &__title {
+    display: flex;
+    align-items: center;
+    svg {
+      margin-right: .75rem;
+    }
+  }
+  &__subtitle {
+    color: $gray;
+    margin-top: 2rem;
+  }
+  &__links {
+    position: relative;
+    .form-group {
+      margin-top: 1.5rem;
+    }
+    .link {
+      font-size: .875rem;
+      margin-left: 1rem;
+      display: none;
+    }
+    & + &,
+    & + .btn {
+      margin-top: 1rem;
+      .link {
+        display: inline;
+      }
+    }
+  }
+  .form-group--radio {
+    padding: .5rem 0 0 .5rem;
+    & > label {
+      height: 1.5rem;
+      .g-checkbox {
+        height: 100%;
+      }
+    }
+  }
+}

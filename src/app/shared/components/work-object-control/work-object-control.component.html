@@ -1,0 +1,53 @@
+<ng-container [formGroup]="form">
+  <div *ngIf="!hideLC" class="form-group">
+    <label>Жилой комплекс</label>
+    <ng-select
+      [items]="livingComplexes$ | async"
+      formControlName="livingComplexId"
+      bindLabel="name"
+      bindValue="id"
+      dropdownPosition="auto"
+      placeholder="Выбрать ЖК"
+      (change)="$event && form.controls.livingComplexName?.setValue($event.name)"
+    >
+      <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+        <span [innerHtml]="item.name | textHighlight:search"></span>
+      </ng-template>
+    </ng-select>
+  </div>
+
+  <div class="form-group">
+    <label>Объект</label>
+    <ng-select
+      [items]="objects$ | async"
+      placeholder="Выбрать объект"
+      formControlName="objectId"
+      bindLabel="commercialName"
+      bindValue="id"
+      dropdownPosition="auto"
+      (change)="$event && form.controls.objectName?.setValue($event.commercialName)"
+    >
+      <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+        <span [innerHtml]="item.commercialName | textHighlight:search"></span>
+      </ng-template>
+    </ng-select>
+  </div>
+
+  <ng-container formGroupName="metaInfo">
+    <ng-container formArrayName="sections">
+      <app-work-section-control
+        *ngFor="let section of formSections.controls; let i = index"
+        [form]="form"
+        [index]="i"
+        class="form-group"
+        (onRemove)="formSections.removeAt(i)">
+      </app-work-section-control>
+    </ng-container>
+  </ng-container>
+
+  <footer class="work-object-actions">
+    <button class="btn btn-default" [disabled]="livingComplexControl.invalid || objectControl.invalid" (click)="addSection()">
+      Добавить секцию
+    </button>
+  </footer>
+</ng-container>

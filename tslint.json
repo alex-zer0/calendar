@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "tslint-config"
+  ],
+  "rules": {
+    "align": false,
+    "max-line-length": [true, 120]
+  }
+}

@@ -1,0 +1,9 @@
+<header class="admin-dashboard-header">
+  <h1>Tableau dashboard</h1>
+</header>
+<section class="admin-dashboard-section">
+  <ng-container *ngFor="let configItem of (config$ | async)">
+    <h3>{{ configItem.description }}</h3>
+    <input type="text" class="form-control" placeholder="Ссылка..." [(ngModel)]="config[configItem.id]" (blur)="onSave(configItem)"/>
+  </ng-container>
+</section>

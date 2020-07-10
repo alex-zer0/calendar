@@ -1,0 +1,210 @@
+@import 'variables';
+
+.registry-page {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .75rem 2rem .75rem 1rem;
+    border-bottom: 1px solid $border-gray;
+    height: 4rem;
+  }
+  &__header-nav {
+    display: inline-flex;
+    align-items: center;
+    & > .btn {
+      margin-right: 1.5rem;
+    }
+  }
+  &__filters {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    &--hidden {
+      visibility: hidden;
+    }
+  }
+  &__chips {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  &__chip {
+    color: $gray;
+    border: 1px solid $border-gray;
+    display: inline-flex;
+    align-items: center;
+    height: 2rem;
+    font-size: .75rem;
+    padding: 0 1rem;
+    border-radius: 1rem;
+    transition: color .15s ease;
+    cursor: pointer;
+    margin: .25rem 1rem .25rem 0;
+    &--active, &:hover {
+      color: $white;
+      background: $blue;
+      border-color: $blue;
+    }
+  }
+  &__section {
+    display: flex;
+    height: calc(100vh - 154px);
+    @include respond-to(tablets) {
+      height: calc(100vh - 130px);
+    }
+    &--full-vh {
+      height: calc(100vh - 4rem) !important;
+    }
+  }
+  &__aside {
+    flex: 0 0 280px;
+    border-right: 1px solid $border-gray;
+    max-height: 100%;
+    overflow: auto;
+  }
+  &__content {
+    flex: 0 1 calc(100% - 280px);
+    padding: 1.75rem 2rem 3rem;
+    max-height: 100%;
+    overflow: auto;
+  }
+}
+
+.registry-item {
+  padding: 1rem;
+  border-left: 2px solid transparent;
+  transition: border-color .15s ease;
+  cursor: pointer;
+  &--active, &:hover {
+    border-left-color: $red;
+  }
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $gray;
+    font-size: .75rem;
+  }
+  &__status {
+    color: $gray;
+    font-size: .75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem 0;
+    &:after {
+      content: '';
+      display: inline-flex;
+      width: .375rem;
+      height: .375rem;
+      flex: 0 0 .375rem;
+      border-radius: 100%;
+      background-color: $red;
+    }
+    &.green:after {
+      background-color: $green;
+    }
+  }
+  &__name {
+    font-weight: 500;
+    margin: 0;
+    font-size: .875rem;
+  }
+}
+
+.registry-dashboard {
+  &__title {
+    margin: 2rem 0 .5rem;
+    font-size: 1.5rem;
+    color: #212121;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  &__chart {
+    display: flex;
+  }
+  &__date-picker {
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+}
+
+.viz-dashboard {
+  flex: 0 0 calc(100% - 340px);
+  margin-right: 1.5rem;
+}
+
+.registry-tile {
+  background: $white;
+  border: 1px solid $border-gray;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  cursor: pointer;
+  &--active {
+    color: $white;
+    background: $blue;
+    .registry-tile__hint {
+      color: $white;
+    }
+    .registry-tile__icon {
+      border-color: rgba($white, .5);
+      svg {
+        fill: rgba($white, .8);
+      }
+    }
+  }
+  &--today {
+    padding: 1.5rem 1.75rem;
+    justify-content: flex-start;
+    .registry-tile__value {
+      font-size: 3.75rem;
+    }
+    .registry-tile__info {
+      margin-left: 1.5rem;
+    }
+    .registry-tile__hint {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: .375rem;
+    }
+    .registry-tile__date {
+      font-size: .75rem;
+      padding: .375rem .5rem;
+      border-radius: 1rem;
+      background: rgba(0,0,0,.2);
+    }
+  }
+  &__info {
+    display: inline-block;
+  }
+  &__hint {
+    font-size: .875rem;
+    color: $gray;
+    display: block;
+    margin-bottom: .25rem;
+    line-height: 1rem;
+  }
+  &__value {
+    font-size: 3rem;
+    line-height: 3rem;
+  }
+  &__icon {
+    border-radius: 100%;
+    border: 1px solid $border-gray;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 3.5rem;
+    height: 3.5rem;
+    svg {
+      fill: $blue;
+    }
+  }
+}

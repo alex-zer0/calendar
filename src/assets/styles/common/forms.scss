@@ -1,0 +1,125 @@
+.form-control {
+  display: block;
+  width: 100%;
+  padding: .5rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  background-clip: padding-box;
+  transition: all .15s ease-in-out;
+  border: 1px solid $border-gray;
+  border-radius: .25rem;
+  width: 100%;
+
+  &:focus {
+    background: $white;
+  }
+}
+
+input.form-control {
+  height: 2rem;
+  line-height: 2;
+  vertical-align: middle;
+}
+
+textarea.form-control {
+  min-height: 4rem;
+}
+
+.g-checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+
+    &:checked + .g-checkbox__box {
+      background: $bg-blue;
+      border-color: $blue;
+
+      &:before {
+        content: "";
+        width: .875rem;
+        height: .875rem;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%234688F1' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        display: block;
+      }
+    }
+
+    &:checked + .g-checkbox__radio:before {
+      content: "";
+      width: .5rem;
+      height: .5rem;
+      background: $blue;
+      border-radius: 50%;
+      display: block;
+    }
+  }
+
+  &__box {
+    width: 1rem;
+    min-width: 1rem;
+    height: 1rem;
+    border: 1px solid $black;
+    border-radius: .125rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: $white;
+  }
+
+  &__radio {
+    width: 1rem;
+    min-width: 1rem;
+    height: 1rem;
+    border: 2px solid $blue;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: $white;
+  }
+
+  &__label {
+    font-size: .875rem;
+    margin-left: .5rem;
+    line-height: 1.2;
+  }
+}
+
+.form-group {
+  margin-top: 1.5rem;
+  label {
+    font-size: .875rem;
+    font-weight: 500;
+    display: block;
+    margin-bottom: .25rem;
+    & > small {
+      color: $gray;
+      float: right;
+      vertical-align: bottom;
+      transform: translateY(2px);
+      opacity: .8;
+    }
+    & + .form-group__hint {
+      margin: -.25rem 0 .25rem;
+    }
+  }
+  &__hint {
+    color: $gray;
+    font-size: .875rem;
+    display: block;
+  }
+  &--checkboxes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .g-checkbox + .g-checkbox {
+      margin-top: .5rem;
+    }
+  }
+}

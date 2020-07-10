@@ -1,0 +1,29 @@
+<article *ngIf="status == statuses.COMPLETED">
+  <h2>Ваше сообщение успешно отправлено</h2>
+  <p>По результатам выдачи прав Вам придет сообщение.</p>
+</article>
+
+<article *ngIf="status == statuses.ERROR">
+  <h2>В результате отправки сообщения произошла ошибка</h2>
+  <p>Пожалуйста, свяжитесь с технической поддержкой по телефону 0911.</p>
+</article>
+
+<form *ngIf="!status" [formGroup]="form" (submit)="sendFeedback()" class="home-feedback-form">
+  <p>
+    У вас отсутствуют права на доступ к системе.
+    Для предоставления доступа необходимо заполнить форму обратной связи.
+  </p>
+  <div class="form-group">
+    <label>Фамилия Имя Отчество</label>
+    <input type="text" formControlName="fio" class="form-control"/>
+  </div>
+  <div class="form-group">
+    <label>Организация</label>
+    <input type="text" formControlName="organization" class="form-control"/>
+  </div>
+  <div class="form-group">
+    <label>ИНН организации</label>
+    <input type="number" formControlName="inn" min="1000000000" max="999999999999" class="form-control"/>
+  </div>
+  <input type="submit" [disabled]="form.invalid" class="btn btn-primary" value="Отправить" />
+</form>

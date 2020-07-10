@@ -1,0 +1,54 @@
+.ng-select {
+  font-size: .875rem;
+
+  &.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+    top: auto;
+  }
+
+  .ng-clear-wrapper {
+    margin: 0 .25rem 0 .5rem;
+
+    .ng-clear {
+      font-size: 1.75rem !important;
+    }
+
+    & + .ng-arrow-wrapper {
+      display: none;
+    }
+  }
+
+  .ng-optgroup-title {
+    font-size: .75rem;
+    & > span {
+      font-size: .625rem;
+      display: block;
+      &:before {
+        content: '> ';
+      }
+    }
+  }
+
+  .ng-dropdown-panel {
+    .ng-dropdown-panel-items {
+      .ng-optgroup {
+        padding: 1rem 1rem .75rem;
+        color: $black;
+        font-size: .625rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        border-top: 1px solid $border-gray;
+      }
+
+      .ng-option {
+        white-space: normal;
+        padding-left: 1rem;
+
+        .highlighted {
+          text-decoration: none;
+          font-weight: 500;
+          color: $blue;
+        }
+      }
+    }
+  }
+}

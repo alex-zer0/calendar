@@ -1,0 +1,19 @@
+@import 'variables';
+
+.work-time-control {
+  &__time {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    .ng-select {
+      width: 110px;
+    }
+    & > span {
+      display: inline-flex;
+      margin: 0 .5rem;
+      height: 2px;
+      width: .75rem;
+      background-color: $border-gray;
+    }
+  }
+}

@@ -1,0 +1,51 @@
+<div class="modal slide-modal">
+  <div class="modal__backdrop" (click)="close()"></div>
+  <div class="modal__dialog">
+    <div class="modal__body registry-edit">
+      <h3 class="registry-edit__title">Редактировать запись реестра</h3>
+      <form *ngIf="isOpened" [formGroup]="form" class="registry-edit__form">
+        <h4 class="registry-edit__subtitle">Участок работ</h4>
+        <app-work-object-control [form]="form" [hideLC]="true" [sections]="meeting?.metaInfo?.sections"></app-work-object-control>
+        <h4 class="registry-edit__subtitle">Типы работ</h4>
+        <app-work-types-control [form]="form" [checkLists]="meeting?.checklists"></app-work-types-control>
+        <ng-container *ngIf="isBuildComfortAdmin && meeting?.status.id == 10">
+          <h4 class="registry-confirm__subtitle">Участники</h4>
+          <div class="form-group user-control" [formGroup]="form">
+            <label>Участник</label>
+            <ng-select
+              [items]="users$ | async"
+              formControlName="globalId"
+              bindLabel="fullName"
+              bindValue="globalId"
+              dropdownPosition="auto"
+            >
+              <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                <div class="user-control__guest-item">
+                  <app-user-photo [hash]="item.globalId" [size]="32"></app-user-photo>
+                  <div class="user-control__guest-item__info">
+                    <span [innerHtml]="item.fullName | textHighlight:search"></span>
+                    <span class="user-control__guest-item__email">{{ item.email }}</span>
+                  </div>
+                </div>
+              </ng-template>
+            </ng-select>
+          </div>
+          <ng-container *ngIf="(freeBusy$ | async) as freeBusy">
+            <ng-container *ngIf="form.get('globalId').value">
+              <h4 class="registry-confirm__subtitle">Время заявки</h4>
+              <app-work-time-control
+                [freeBusy]="freeBusy"
+                [disabled]="!isFreeBusyLoaded"
+                [form]="form">
+              </app-work-time-control>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn-default" (click)="close()">Отмена</button>
+      <button class="btn btn-primary" [disabled]="form.invalid" (click)="save()">Сохранить</button>
+    </div>
+  </div>
+</div>

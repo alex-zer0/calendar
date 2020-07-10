@@ -1,0 +1,39 @@
+<section class="home-page">
+  <header *ngIf="isAdmin$ | async">
+    <a routerLink="/admin">
+      <svg width="40" height="40">
+        <use xlink:href="#admin-cog"></use>
+      </svg>
+    </a>
+  </header>
+  <ng-container *ngIf="(auth$ | async) as auth">
+    <article *ngIf="auth.accessRules.length > 0; else form">
+      <h1>Календарь вызовов</h1>
+      <p>Вызов специалистов контроля и качества на строительные площадки</p>
+      <ul>
+        <ng-container *ngFor="let option of options">
+          <li *ngIf="auth.accessRules.includes(option.rule)">
+            <a routerLink="/registry" (click)="setControlType(option.id)">
+              <svg width="40" height="40">
+                <use [attr.xlink:href]="option.icon"></use>
+              </svg>
+              <p>{{ option.title }}</p>
+            </a>
+          </li>
+        </ng-container>
+        <li *ngIf="isReport$ | async">
+          <a routerLink="/operation-report">
+            <svg width="40" height="40">
+              <use xlink:href="#operation-report"></use>
+            </svg>
+            <p>Операционная отчетность</p>
+          </a>
+        </li>
+      </ul>
+    </article>
+    <ng-template #form>
+      <app-home-feedback></app-home-feedback>
+    </ng-template>
+  </ng-container>
+</section>
+<app-svg-definitions></app-svg-definitions>

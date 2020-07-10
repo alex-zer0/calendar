@@ -1,0 +1,304 @@
+<article
+  *ngIf="{
+    auth: auth$ | async,
+    isIC: isIC$ | async
+  } as obs"
+  class="registry-meeting"
+>
+  <header class="registry-meeting__header">
+    <div class="registry-meeting__header__content">
+      <span class="registry-meeting__header__id">№ {{ meeting.id }}</span>
+      <h2 class="registry-meeting__header__title">{{ meeting.object.name }}</h2>
+      <div class="registry-meeting__header__info">
+        <span class="registry-meeting__header__status" [class.green]="meeting.status?.id == 60">
+          {{ meeting.status?.name }}
+        </span>
+        <span>|</span>
+        <span class="registry-meeting__header__date">
+          Дата заявки: {{ meeting.created | date:'dd.MM.y' }}
+        </span>
+      </div>
+      <div class="registry-meeting__header__close" (click)="closeMeeting()">
+        <svg width="24" height="24">
+          <use xlink:href="#close"></use>
+        </svg>
+      </div>
+    </div>
+    <div *ngIf="obs.auth" class="registry-meeting__header__actions">
+      <ng-container *ngIf="!meeting.isReadOnly && meeting.status?.id != 30 && meeting.status?.id != 20">
+        <button
+          *ngIf="obs.auth.accessRules.includes(accessRules.EDIT) && meeting.status?.id != 50"
+          class="btn btn-default btn-icon-primary"
+          (click)="editMeeting(meeting)"
+        >
+          <svg width="20" height="20"><use xlink:href="#edit"></use></svg>
+          Редактировать
+        </button>
+        <button
+          *ngIf="obs.auth.accessRules.includes(accessRules.DELETE)"
+          class="btn btn-default"
+          (click)="removeMeeting(meeting)"
+        >
+          <svg width="20" height="20"><use xlink:href="#trash-o"></use></svg>
+          Удалить
+        </button>
+      </ng-container>
+      <ng-container *ngIf="obs.isIC">
+        <button
+          *ngIf="obs.auth.accessRules.includes(accessRules.REJECT) && (meeting.status?.id == 40 || meeting.status?.id == 10)"
+          class="btn btn-default"
+          (click)="triggerAction(accessRules.REJECT)"
+        >
+          <svg width="20" height="20">
+            <use xlink:href="#cancel"></use>
+          </svg>
+          Отклонить
+        </button>
+        <button
+          *ngIf="obs.auth.accessRules.includes(accessRules.MAKE) && meeting.status?.id == 40"
+          class="btn btn-action"
+          (click)="confirmWork(meeting)"
+        >
+          <svg width="20" height="20">
+            <use xlink:href="#check"></use>
+          </svg>
+          Подтвердить
+        </button>
+      </ng-container>
+      <ng-container *ngIf="!obs.isIC">
+        <ng-container *ngIf="meeting.status?.id == 10">
+          <button
+            *ngIf="obs.auth.accessRules.includes(accessRules.CONFIRM_DECISION)"
+            class="btn btn-action"
+            (click)="triggerAction(accessRules.CONFIRM_DECISION)"
+          >
+            <svg width="20" height="20">
+              <use xlink:href="#file-edit-o"></use>
+            </svg>
+            Заполнить решение
+          </button>
+        </ng-container>
+        <ng-container *ngIf="meeting.status?.id == 50">
+          <button
+            *ngIf="obs.auth.accessRules.includes(accessRules.REJECT)"
+            class="btn btn-default"
+            (click)="triggerAction(accessRules.REJECT)"
+          >
+            <svg width="20" height="20">
+              <use xlink:href="#cancel"></use>
+            </svg>
+            Отклонить
+          </button>
+          <button
+            *ngIf="obs.auth.accessRules.includes(accessRules.CONFIRM_WORK)"
+            class="btn btn-action"
+            (click)="confirmWork(meeting)"
+          >
+            <svg width="20" height="20">
+              <use xlink:href="#check"></use>
+            </svg>
+            Принять работу
+          </button>
+        </ng-container>
+        <ng-container *ngIf="meeting.status?.id == 70">
+          <button
+            *ngIf="obs.auth.accessRules.includes(accessRules.REJECT)"
+            class="btn btn-default"
+            (click)="triggerAction(accessRules.REJECT)"
+          >
+            <svg width="20" height="20">
+              <use xlink:href="#cancel"></use>
+            </svg>
+            Отказать
+          </button>
+          <button
+            *ngIf="obs.auth.accessRules.includes(accessRules.CONFIRM)"
+            class="btn btn-action"
+            (click)="confirmMeeting(meeting)"
+          >
+            <svg width="20" height="20">
+              <use xlink:href="#check"></use>
+            </svg>
+            Подтвердить
+          </button>
+        </ng-container>
+      </ng-container>
+    </div>
+  </header>
+  <div class="row">
+    <div class="col col-md-6">
+      <h3 class="registry-meeting__subtitle">Участок работ</h3>
+      <div class="registry-meeting__group">
+        <span class="registry-meeting__label">Жилой комплекс</span>
+        <p>{{ meeting.object.livingComplexName }}</p>
+      </div>
+      <div class="registry-meeting__group">
+        <span class="registry-meeting__label">Объект</span>
+        <p>{{ meeting.object.commercialName }}</p>
+      </div>
+      <div *ngFor="let section of meeting.metaInfo?.sections" class="registry-meeting__group row">
+        <div class="col">
+          <span class="registry-meeting__label">Секция</span>
+          <p>{{ section.sectionName || section.sectionId || '-' }}</p>
+        </div>
+        <div class="col">
+          <span class="registry-meeting__label">Этажи</span>
+          <p>{{ getNames(section.floors) || '-' }}</p>
+        </div>
+        <div class="col">
+          <span class="registry-meeting__label">Квартиры</span>
+          <p>{{ getNames(section.realEstates) || '-' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col col-md-6">
+      <h3 class="registry-meeting__subtitle">Время работ</h3>
+      <div class="row">
+        <div class="col">
+          <span class="registry-meeting__label">Дата</span>
+          <p>{{ meeting.meetingStartDate | date:'d MMMM y' }}</p>
+        </div>
+        <div class="col">
+          <span class="registry-meeting__label">Время</span>
+          <p>{{ meeting.meetingStartDate | date:'HH:mm' }} - {{ meeting.meetingEndDate | date:'HH:mm' }}</p>
+        </div>
+      </div>
+      <div *ngIf="meeting.declineReason && [10, 20, 50].includes(meeting.status?.id)" class="g-alert g-alert--danger">
+        <h3>Вызов был отменен</h3>
+        <div class="g-alert__block">
+          <span>{{ meeting.declineReason.rejectedUser }}</span>
+          <small>Инициатор отмены</small>
+          <h5>Причина отмены: {{ meeting.declineReason.declineReason }}</h5>
+          <span>{{ meeting.declineReason.description }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="meeting.resolution && [10, 50, 60].includes(meeting.status?.id)">
+    <h3 class="registry-meeting__subtitle">Решение по вызову</h3>
+    <div class="g-alert g-alert--no-offset">
+      <h5>Комментарий: {{ meeting.resolution.comment }}</h5>
+      <span>Прикрепленные ссылки: {{ meeting.resolution.description }}</span>
+    </div>
+  </ng-container>
+  <h3 class="registry-meeting__subtitle">Прикрепленные документы</h3>
+  <div class="row">
+    <div
+      *ngFor="let document of meeting.documents"
+      class="col"
+      [ngClass]="meeting.documents?.length > 3 ? 'col-md-6' : 'col-12'"
+    >
+      <a class="registry-meeting__document" [href]="document.link" target="_blank" download>
+        <div class="registry-meeting__document__icon">
+          <svg width="20" height="20"><use xlink:href="#file-o"></use></svg>
+        </div>
+        <div class="registry-meeting__document__info">
+          <span class="registry-meeting__document__file-name">{{ document.documentName }}</span>
+          <span class="registry-meeting__document__title">{{ document.created | date:'HH:mm dd.MM.y' }}</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <h3 class="registry-meeting__subtitle">Типы работ</h3>
+  <div class="registry-meeting__work-types">
+    <div *ngFor="let checkList of meeting.checklists" class="registry-meeting__work-type">
+      <div class="registry-meeting__work-type__left">
+        <span class="registry-meeting__label">Тип работ</span>
+        <p>{{ checkList.checklistTitle }}</p>
+        <ng-container *ngIf="!isDecoration(checkList.controlTypes)">
+          <span class="registry-meeting__label">Ось</span>
+          <p>{{ checkList.axis || '-' }}</p>
+        </ng-container>
+      </div>
+      <div class="registry-meeting__work-type__right">
+        <span class="registry-meeting__label">Объем</span>
+        <p>{{ checkList.scope || '-' }}</p>
+        <ng-container *ngIf="!isDecoration(checkList.controlTypes)">
+          <span class="registry-meeting__label">Высотная отметка</span>
+          <p>{{ checkList.highMark || '-' }}</p>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="isValidUsers$ | async">
+    <h3 class="registry-meeting__subtitle">Участники</h3>
+    <div class="registry-meeting__users row">
+      <div *ngIf="(initiator$ | async) as initiator" class="col col-md-4">
+        <h4>Инициатор</h4>
+        <div class="registry-meeting__user" [ngClass]="initiator.status">
+          <div class="registry-meeting__user-ava">
+            <app-user-photo [hash]="initiator.globalId" [size]="56"></app-user-photo>
+          </div>
+          <div class="registry-meeting__user-info">
+            <h5>{{ initiator.fullName }}</h5>
+            <span>{{ initiator.userRoleName }}</span>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="(finishingControl$ | async) as finishingControl">
+        <div *ngIf="finishingControl.length" class="col col-md-4">
+          <h4>Контроль отделки</h4>
+          <div *ngFor="let user of finishingControl" class="registry-meeting__user" [ngClass]="user.status">
+            <div class="registry-meeting__user-ava">
+              <app-user-photo [hash]="user.globalId" [size]="56"></app-user-photo>
+            </div>
+            <div class="registry-meeting__user-info">
+              <h5>{{ user.fullName }}</h5>
+              <span>{{ user.userRoleName }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="(buildControl$ | async) as buildControl">
+        <div *ngIf="buildControl.length" class="col col-md-4">
+          <h4>Строительный контроль</h4>
+          <div *ngFor="let user of buildControl" class="registry-meeting__user" [ngClass]="user.status">
+            <div class="registry-meeting__user-ava">
+              <app-user-photo [hash]="user.globalId" [size]="56"></app-user-photo>
+            </div>
+            <div class="registry-meeting__user-info">
+              <h5>{{ user.fullName }}</h5>
+              <span>{{ user.userRoleName }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="(authControl$ | async) as authControl">
+        <div *ngIf="authControl?.length" class="col col-md-4">
+          <h4>Авторский надзор</h4>
+          <div *ngFor="let user of authControl" class="registry-meeting__user" [ngClass]="user.status">
+            <div class="registry-meeting__user-ava">
+              <app-user-photo [hash]="user.globalId" [size]="56"></app-user-photo>
+            </div>
+            <div class="registry-meeting__user-info">
+              <h5>{{ user.fullName }}</h5>
+              <span>{{ user.userRoleName }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="(buildComfort$ | async) as buildComfort">
+        <div *ngIf="buildComfort?.length" class="col col-md-4">
+          <h4>Строй-Комфорт</h4>
+          <div *ngFor="let user of buildComfort" class="registry-meeting__user" [ngClass]="user.status">
+            <div class="registry-meeting__user-ava">
+              <app-user-photo [hash]="user.globalId" [size]="56"></app-user-photo>
+            </div>
+            <div class="registry-meeting__user-info">
+              <h5>{{ user.fullName }}</h5>
+              <span>{{ user.userRoleName }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</article>
+<app-modal #modal></app-modal>
+<app-registry-edit [auth]="auth$ | async" #edit></app-registry-edit>
+<app-registry-confirm #confirm></app-registry-confirm>
+<app-registry-action #action></app-registry-action>

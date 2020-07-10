@@ -1,0 +1,37 @@
+@import 'variables';
+
+.guests-control {
+  &__guest {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    padding-left: .25rem;
+    .link {
+      font-size: .875rem;
+    }
+    &__info {
+      display: inline-flex;
+      align-items: center;
+    }
+    &__name {
+      display: block;
+      font-size: .875rem;
+      color: $black;
+    }
+    &__email {
+      display: block;
+      font-size: .75rem;
+      color: $gray;
+    }
+  }
+  &__guest-item {
+    display: flex;
+    align-items: center;
+    &__email {
+      font-size: .75rem;
+      color: $gray;
+      display: block;
+    }
+  }
+}

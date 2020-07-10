@@ -1,0 +1,82 @@
+<div *ngIf="isOpened && schema" class="modal slide-modal">
+  <div class="modal__backdrop" (click)="close()"></div>
+  <div class="modal__dialog">
+    <div class="modal__body registry-action">
+      <h3 *ngIf="schema.title" class="registry-action__title">
+        <svg *ngIf="schema.icon" width="20" height="20" [style.fill]="schema.icon.color">
+          <use [attr.xlink:href]="schema.icon.link"></use>
+        </svg>
+        {{ schema.title }}
+      </h3>
+      <form [formGroup]="form" class="registry-action__form">
+        <ng-container *ngIf="schema.fields.includes('reason')">
+          <div *ngIf="(declineReasons$ | async) as reasons" class="form-group">
+            <label>Выберите причину отклонения вызова</label>
+            <div class="form-group--radio">
+              <label *ngFor="let reason of reasons">
+                <div class="g-checkbox">
+                  <input type="radio" [value]="reason.id" formControlName="declineReasonId">
+                  <span class="g-checkbox__radio"></span>
+                  <span class="g-checkbox__label">{{ reason.name }}</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <h4 class="registry-action__subtitle">Описание причины отказа</h4>
+          <div class="form-group">
+            <label>Комментарий</label>
+            <textarea formControlName="comment" class="form-control"></textarea>
+          </div>
+        </ng-container>
+
+        <div *ngIf="schema.fields.includes('documents')" class="form-group">
+          <label>Сопроводительные документы</label>
+          <div *ngFor="let document of documents; let i = index" class="registry-action__file">
+            <app-file-upload
+              [title]="'Документ ' + (i + 1)"
+              [file]="document"
+              (remove)="removeDocument(i)"
+              (upload)="uploadDocument($event, i)">
+            </app-file-upload>
+          </div>
+          <div class="registry-action__file">
+            <app-file-upload
+              [title]="'Новый документ'"
+              (upload)="uploadDocument($event, documents.length)">
+            </app-file-upload>
+          </div>
+        </div>
+
+        <div *ngIf="schema.fields.includes('rejectComment')" class="form-group">
+          <label>Описание причины отклонения</label>
+          <textarea formControlName="comment" class="form-control"></textarea>
+        </div>
+
+        <div *ngIf="schema.fields.includes('comment')" class="form-group">
+          <label>Комментарии</label>
+          <textarea formControlName="comment" class="form-control"></textarea>
+        </div>
+
+        <div *ngIf="schema.fields.includes('links')" class="form-group">
+          <label>Ссылка из смежных систем <small>Доп поле</small></label>
+          <input type="text" formControlName="link" class="form-control"/>
+          <!-- <button *ngIf="linksGroup.valid" class="btn btn-default btn-icon-primary" (click)="addLink()">
+            <svg width="16" height="16">
+              <use xlink:href="#plus"></use>
+            </svg>
+            Добавить еще одну ссылку
+          </button> -->
+        </div>
+      </form>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn-primary" [disabled]="form.invalid" (click)="save()">
+        {{ schema.btnLabel || 'ОК' }}
+      </button>
+      <button class="btn btn-default" (click)="close()">
+        Отмена
+      </button>
+    </div>
+  </div>
+</div>

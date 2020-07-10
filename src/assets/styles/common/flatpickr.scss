@@ -1,0 +1,30 @@
+.flatpickr-calendar {
+  box-shadow: none;
+  border-radius: 0;
+  border: 1px solid $border-gray;
+
+  .flatpickr-months {
+    padding: .5rem;
+    .flatpickr-prev-month,
+    .flatpickr-next-month {
+      padding: 1rem;
+    }
+  }
+
+  .flatpickr-day {
+    &--busy {
+      position: relative;
+
+      &::after {
+        position: absolute;
+        content: '';
+        top: .25rem;
+        right: .25rem;
+        height: .375rem;
+        width: .375rem;
+        border-radius: 100%;
+        background-color: $red;
+      }
+    }
+  }
+}

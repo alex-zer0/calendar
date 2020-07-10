@@ -1,0 +1,18 @@
+<header class="admin-notifications-header">
+  <h1>Уведомления</h1>
+</header>
+<section class="admin-notifications-section">
+  <ng-container *ngFor="let configItem of (config$ | async)">
+    <h3>{{ configItem.description }}</h3>
+    <ng-select
+      [items]="[]"
+      [multiple]="true"
+      [addTag]="true"
+      [(ngModel)]="config[configItem.id]"
+      addTagText="Email:"
+      dropdownPosition="auto"
+      placeholder="Введите email"
+      (blur)="onSave(configItem)">
+    </ng-select>
+  </ng-container>
+</section>

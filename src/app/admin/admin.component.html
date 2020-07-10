@@ -1,0 +1,55 @@
+<section class="admin-page">
+  <aside class="admin-page__aside">
+    <nav class="admin-page__nav">
+      <div class="admin-page__aside-brand">
+        <svg width="60" height="60">
+          <use xlink:href="#admin-cog"></use>
+        </svg>
+      </div>
+      <div class="admin-page__aside-menu">
+        <h5>Справочники</h5>
+        <ul>
+          <li>
+            <a routerLink="/admin/users" [routerLinkActive]="'active'">
+              <svg width="24" height="24">
+                <use xlink:href="#people"></use>
+              </svg>
+              Пользователи
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="admin-page__aside-menu">
+        <h5>Настройки</h5>
+        <ul>
+          <li>
+            <a routerLink="/admin/notifications" [routerLinkActive]="'active'">
+              <svg width="24" height="24">
+                <use xlink:href="#notifications"></use>
+              </svg>
+              Уведомления
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/dashboard" [routerLinkActive]="'active'">
+              <svg width="24" height="24">
+                <use xlink:href="#dashboard"></use>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <a class="admin-page__close-link" routerLink="/">
+      <svg width="24" height="24">
+        <use xlink:href="#close"></use>
+      </svg>
+      Закрыть
+    </a>
+  </aside>
+  <main class="admin-page__main">
+    <router-outlet></router-outlet>
+  </main>
+</section>
+<app-svg-definitions></app-svg-definitions>

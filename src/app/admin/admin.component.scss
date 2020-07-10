@@ -1,0 +1,78 @@
+@import 'variables';
+
+.admin-page {
+  display: flex;
+  height: 100%;
+  &__main {
+    flex: 0 1 100%;
+    max-height: 100%;
+    overflow: auto;
+  }
+  &__aside {
+    flex: 0 0 210px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid $border-gray;
+    justify-content: space-between;
+  }
+  &__nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  &__aside-brand {
+    flex: 0 0 120px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      fill: $gray;
+    }
+  }
+  &__aside-menu {
+    border-top: 1px solid $border-gray;
+    & > h5 {
+      font-size: .875rem;
+      font-weight: normal;
+      padding: .75rem 1rem;
+      color: $head-gray;
+      margin: 0;
+    }
+    ul {
+      li {
+        display: block;
+        height: 2.5rem;
+        width: 100%;
+        a {
+          height: 100%;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          padding: .25rem 1rem;
+          color: $black;
+          font-size: .875rem;
+          svg {
+            margin-right: 1.5rem;
+            fill: $gray;
+          }
+          &.active, &:hover {
+            background: rgba(13, 197, 255, 0.14);
+          }
+        }
+      }
+    }
+  }
+  &__close-link {
+    display: flex;
+    height: 3.5rem;
+    width: 100%;
+    align-items: center;
+    padding: .25rem 1.25rem;
+    color: $black;
+    font-size: .875rem;
+    svg {
+      margin-right: 2.25rem;
+      fill: $gray;
+    }
+  }
+}

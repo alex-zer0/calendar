@@ -1,0 +1,59 @@
+.g-alert {
+  padding: .5rem 1rem;
+  margin: 1rem 0;
+  &--danger {
+    background-color: $bg-red;
+    h3 {
+      color: $red;
+    }
+  }
+  &--info {
+    h3 {
+      color: $blue;
+    }
+  }
+  &--icon {
+    padding-left: 3rem;
+    position: relative;
+    & > svg {
+      position: absolute;
+      top: .5rem;
+      left: .5rem;
+      fill: $blue;
+    }
+  }
+  &--no-offset {
+    padding: 0;
+    margin: 0;
+  }
+  h3 {
+    margin: 0 0 .5rem;
+  }
+  h5 {
+    margin: .75rem 0 .25rem;
+    font-weight: 500;
+  }
+  ul {
+    margin-top: .75rem;
+    li {
+      margin: .5rem 0;
+    }
+  }
+  strong {
+    font-weight: 600;
+  }
+  span {
+    display: block;
+    font-size: .875rem;
+  }
+  small {
+    display: block;
+    font-size: .75rem;
+    color: $red;
+  }
+  &__block {
+    & + & {
+      margin-top: 1rem;
+    }
+  }
+}

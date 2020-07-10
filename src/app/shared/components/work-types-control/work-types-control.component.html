@@ -1,0 +1,45 @@
+<div [formGroup]="form" class="work-types-control">
+  <ng-container formArrayName="checkLists">
+    <div *ngFor="let checkList of checkListsGroup.controls; let i = index" class="form-group work-types-control__type">
+      <label>Тип работы <a class="link" (click)="checkListsGroup.removeAt(i)">удалить</a></label>
+      <ng-select
+        [items]="checklists$ | async"
+        [formControl]="checkList.controls.checklistId"
+        [groupBy]="'groupTitle'"
+        placeholder="Выбрать тип"
+        bindLabel="title"
+        bindValue="id"
+        dropdownPosition="auto"
+        (change)="onChangeCheckList($event, checkList)"
+      >
+        <ng-template ng-optgroup-tmp let-item="item" let-index="index">
+          <span class="ng-optgroup-title" [innerHtml]="item.groupTitle"></span>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+          <span [innerHtml]="item.title | textHighlight:search"></span>
+        </ng-template>
+      </ng-select>
+      <div *ngIf="checkList.controls.checklistId.value && (isIC$ | async)" class="row">
+        <div *ngIf="!isDecoration(checkList.controls.controlTypes.value)" class="col col-4 form-group">
+          <label>Ось</label>
+          <input type="text" [formControl]="checkList.controls.axis" class="form-control"/>
+        </div>
+        <div *ngIf="!isDecoration(checkList.controls.controlTypes.value)" class="col col-4 form-group">
+          <label>Высотная отметка</label>
+          <input type="text" [formControl]="checkList.controls.highMark" class="form-control"/>
+        </div>
+        <div class="col col-4 form-group">
+          <label>Объем работы <small>Доп поле</small></label>
+          <input type="text" placeholder="Ввести кол-во" [formControl]="checkList.controls.scope" class="form-control"/>
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="checkListsGroup.valid" class="btn btn-default btn-icon-primary" (click)="addCheckList()">
+      <svg width="16" height="16">
+        <use xlink:href="#plus"></use>
+      </svg>
+      Добавить еще одну работу
+    </button>
+  </ng-container>
+</div>

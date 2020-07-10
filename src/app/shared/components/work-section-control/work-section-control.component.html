@@ -1,0 +1,57 @@
+<div class="row" [formGroup]="sectionGroup">
+  <div class="col form-group">
+    <label>Секция <a *ngIf="index > 0" class="link" (click)="onRemove.emit()">Удалить</a></label>
+    <ng-select
+      [items]="sections$ | async"
+      [hideSelected]="true"
+      placeholder="Выбрать"
+      formControlName="sectionId"
+      bindLabel="number"
+      bindValue="id"
+      dropdownPosition="auto"
+      (change)="$event && sectionGroup.controls.sectionName?.setValue($event.number)"
+    >
+      <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+        <span [innerHtml]="item.number | textHighlight:search"></span>
+      </ng-template>
+    </ng-select>
+  </div>
+  <div class="col form-group">
+    <label>Этажи <small>Доп поле</small></label>
+    <ng-select
+      [items]="floors$ | async"
+      [multiple]="true"
+      [hideSelected]="true"
+      [closeOnSelect]="false"
+      placeholder="Выбрать"
+      formControlName="floors"
+      bindLabel="number"
+      bindValue="id"
+      dropdownPosition="auto"
+      (change)="setNames($event, 'floorNames', 'number')"
+    >
+      <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+        <span [innerHtml]="item.number | textHighlight:search"></span>
+      </ng-template>
+    </ng-select>
+  </div>
+  <div class="col form-group">
+    <label>Квартиры <small>Доп поле</small></label>
+    <ng-select
+      [items]="realEstates$ | async"
+      [multiple]="true"
+      [hideSelected]="true"
+      [closeOnSelect]="false"
+      placeholder="Выбрать"
+      formControlName="realEstates"
+      bindLabel="conditionalNumber"
+      bindValue="id"
+      dropdownPosition="auto"
+      (change)="setNames($event, 'realEstateNames', 'conditionalNumber')"
+    >
+      <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+        <span [innerHtml]="item.conditionalNumber | textHighlight:search"></span>
+      </ng-template>
+    </ng-select>
+  </div>
+</div>
